@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Pear.InteractionEngine.Controllers
 {
+	/// <summary>
+	/// Default leap motion controller
+	/// </summary>
 	[RequireComponent(typeof(IHandModel))]
 	[RequireComponent(typeof(HandHover))]
 	public class LeapMotionController : Controller

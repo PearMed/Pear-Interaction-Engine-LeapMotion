@@ -5,8 +5,12 @@ using UnityEngine;
 
 namespace Pear.InteractionEngine.Events
 {
+	/// <summary>
+	/// Update the event value when the leap motion starts and stops hovering over a game object
+	/// </summary>
 	public class HandHover : ControllerBehavior<LeapMotionController>, IEvent<GameObject>
 	{
+		// Stores the event value that's handled by IEventListener classes
 		public Property<GameObject> Event { get; set; }
 
 		void Start()

@@ -16,6 +16,7 @@ namespace Pear.InteractionEngine.Events
 		// The last object that was hovered over
 		private GameObject _lastHovered;
 
+		// Stores the event value that's handled by IEventListener classes
 		public Property<GameObject> Event { get; set; }
 
 		// Use this for initialization
