@@ -32,7 +32,7 @@ namespace Pear.InteractionEngine.EventListeners
 			if (args.NewValue == gameObject)
 				detector = args.Source.gameObject.GetComponentInChildren<PinchDetector>();
 
-			bool isLeftHand = (args.NewValue ?? args.OldValue).GetComponent<IHandModel>().GetLeapHand().IsLeft;
+			bool isLeftHand = args.Source.GetComponent<IHandModel>().GetLeapHand().IsLeft;
 			if (isLeftHand)
 				_moveHelper.PinchDetectorA = detector;
 			else

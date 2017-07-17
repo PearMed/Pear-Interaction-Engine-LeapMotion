@@ -10,20 +10,38 @@ namespace Pear.InteractionEngine.Events
 	/// </summary>
 	public class HandHover : ControllerBehavior<LeapMotionController>, IEvent<GameObject>
 	{
+		private ProximityDetector _detector;
+
 		// Stores the event value that's handled by IEventListener classes
 		public Property<GameObject> Event { get; set; }
 
-		void Start()
+		private void OnEnable()
 		{
-			ProximityDetector proximityDetector = Controller.gameObject.GetComponentInChildren<ProximityDetector>();
+			_detector = Controller.gameObject.GetComponentInChildren<ProximityDetector>();
 
 			// When the hand starts hovering over the object
 			// let the object know
-			proximityDetector.OnProximity.AddListener(hoverObj => Event.Value = hoverObj);
+			_detector.OnProximity.AddListener(OnHoverStart);
 
 			// When the hand stops hovering over the object
 			// let the object know
-			proximityDetector.OnDeactivate.AddListener(() => Event.Value = null);
-		}		
+			_detector.OnDeactivate.AddListener(OnHoverEnd);
+		}
+
+		private void OnDisable()
+		{
+			_detector.OnProximity.RemoveListener(OnHoverStart);
+			_detector.OnDeactivate.RemoveListener(OnHoverEnd);
+		}
+
+		private void OnHoverStart(GameObject hovered)
+		{
+			Event.Value = hovered;
+		}
+
+		private void OnHoverEnd()
+		{
+			Event.Value = null;
+		}
 	}
 }

@@ -8,13 +8,14 @@ namespace Pear.InteractionEngine.Events
 	/// <summary>
 	/// Detects when the leap hand starts grabbing an object and lets the object know
 	/// </summary>
+	[RequireComponent(typeof(HandHover))]
 	public class HandGrab : ControllerBehavior<LeapMotionController>, IEvent<GameObject>
 	{
 		// Detects whether the hand is pinching
 		private PinchDetector _pinchDetector;
 
-		// The last object that was hovered over
-		private GameObject _lastHovered;
+		// Detects hovers
+		private HandHover _handHover;
 
 		// Stores the event value that's handled by IEventListener classes
 		public Property<GameObject> Event { get; set; }
@@ -23,23 +24,15 @@ namespace Pear.InteractionEngine.Events
 		void Start()
 		{
 			_pinchDetector = Controller.gameObject.GetComponentInChildren<PinchDetector>();
-
-			// Detects when objects are in close proximity
-			ProximityDetector proximityDetector = Controller.gameObject.GetComponentInChildren<ProximityDetector>();
-
-			// Save the last RTS we hovered over
-			proximityDetector.OnProximity.AddListener(hovered => _lastHovered = hovered);
-
-			// Detect when we stop hovering
-			proximityDetector.OnDeactivate.AddListener(() => _lastHovered = null);
+			_handHover = GetComponent<HandHover>();
 		}
 
 		void Update()
 		{
 			// If we started pinching and we're hoving over an object...grab it
-			if (_pinchDetector.DidStartPinch && _lastHovered != null)
+			if (_pinchDetector.DidStartPinch && _handHover.Event.Value != null)
 			{
-				Event.Value = _lastHovered;
+				Event.Value = _handHover.Event.Value;
 			}
 			// Otherwise, if we just stopped pinching let go of all objects
 			else if (_pinchDetector.DidEndPinch)
