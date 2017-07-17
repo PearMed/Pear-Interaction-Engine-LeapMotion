@@ -1,5 +1,6 @@
 ﻿using Leap.Unity;
 using Pear.InteractionEngine.Events;
+using Pear.Models;
 using UnityEngine;
 
 namespace Pear.InteractionEngine.Controllers
@@ -40,7 +41,7 @@ namespace Pear.InteractionEngine.Controllers
 
 		private void OnHover(GameObject oldValue, GameObject newValue)
 		{
-			ActiveObject = newValue;
+			ActiveObject = newValue ?? ModelLoader.Instance.LoadedModel;
 		}
 
 		void OnEnable()
