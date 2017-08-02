@@ -41,7 +41,7 @@ namespace Pear.InteractionEngine.Controllers
 
 		private void OnHover(GameObject oldValue, GameObject newValue)
 		{
-			ActiveObject = newValue ?? ModelLoader.Instance.LoadedModel;
+			SetActive(newValue ?? ModelLoader.Instance.LoadedModel);
 		}
 
 		void OnEnable()
