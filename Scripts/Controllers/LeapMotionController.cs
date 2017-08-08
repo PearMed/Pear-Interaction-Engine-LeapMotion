@@ -31,7 +31,7 @@ namespace Pear.InteractionEngine.Controllers
 		}
 
 		// Hook up events
-		public override void Start()
+		protected override void Start()
 		{
 			base.Start();
 
